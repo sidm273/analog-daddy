@@ -1,4 +1,54 @@
-"""Utilities for working with Polars DataFrames."""
+"""
+A collection of polars dataframe level helpers.
+
+These helpers could probably be snippets in a docs page. But they have
+earned their place here due to their utility across different domains.
+Most of these are slight modifications of snippets scavenged across the
+internet (primarily Stackoverflow, Discord and Github) and I have
+attempted to credit the original sources wherever possible.
+
+Examples are provided to illustrate their composability.
+
+Examples
+--------
+>>> (
+...     df := pl.DataFrame(
+...         {
+...             "x": [1, None, 3],
+...             "e": [None, None, None],
+...             "d": [None, None, None],
+...             "y": [4.0, None, 6.0],
+...         }
+...     )
+... )
+shape: (3, 4)
+┌──────┬──────┬──────┬──────┐
+│ x    ┆ e    ┆ d    ┆ y    │
+│ ---  ┆ ---  ┆ ---  ┆ ---  │
+│ i64  ┆ null ┆ null ┆ f64  │
+╞══════╪══════╪══════╪══════╡
+│ 1    ┆ null ┆ null ┆ 4.0  │
+│ null ┆ null ┆ null ┆ null │
+│ 3    ┆ null ┆ null ┆ 6.0  │
+└──────┴──────┴──────┴──────┘
+>>> (
+...     # firstly we remove empty rows.
+...     df.pipe(filter_all_null)
+...     # then fill the delimiter column with junk to keep it.
+...     .with_columns(pl.lit("|").alias("d"))
+...     # finally drop any empty columns.
+...     .pipe(drop_all_null)
+... )
+shape: (2, 3)
+┌─────┬─────┬─────┐
+│ x   ┆ d   ┆ y   │
+│ --- ┆ --- ┆ --- │
+│ i64 ┆ str ┆ f64 │
+╞═════╪═════╪═════╡
+│ 1   ┆ |   ┆ 4.0 │
+│ 3   ┆ |   ┆ 6.0 │
+└─────┴─────┴─────┘
+"""
 
 import re
 
@@ -17,6 +67,10 @@ __all__ = [
 def drop_all_null(df: pl.DataFrame) -> pl.DataFrame:
     """
     Drop columns where every value is null.
+
+    Notes
+    -----
+    - Obtained from examples in [drop_nulls](https://docs.pola.rs/api/python/stable/reference/dataframe/api/polars.DataFrame.drop_nulls.html#polars-dataframe-drop-nulls)
 
     Parameters
     ----------
@@ -67,6 +121,10 @@ def drop_all_null(df: pl.DataFrame) -> pl.DataFrame:
 def filter_all_null(df: pl.DataFrame) -> pl.DataFrame:
     """
     Filter out rows from a dataframe where every value is null.
+
+    Notes
+    -----
+    - Obtained from examples in [drop_nulls](https://docs.pola.rs/api/python/stable/reference/dataframe/api/polars.DataFrame.drop_nulls.html#polars-dataframe-drop-nulls)
 
     Parameters
     ----------
@@ -202,8 +260,25 @@ def explode_nested_params(
     identify_str: str = "Parameters:",
 ) -> pl.DataFrame:
     """
-    Turn inline ``key=value`` parameter rows into columns on the data
-    rows below them.
+    Extract inline parameter values and add them as columns to data
+    rows.
+
+    Parameter rows are identified by ``identify_str`` in ``index_col``
+    and contain comma-separated ``key=value`` pairs. Their values are
+    propagated to subsequent data rows until another parameter row is
+    encountered. The list of keys must be provided and cannot change
+    between rows. Use this as a building block for more nested rows with
+    dynamic keys.
+
+    See Also
+    --------
+    - :func:`scan_nested_params` for a helper to extract the keys if they remain identical within
+    a given dataframe.
+
+    Notes
+    -----
+    - This is based on the excellent solution provided in the polars
+    discord's *general discussion* channel.
 
     Parameters
     ----------
@@ -272,70 +347,9 @@ def explode_nested_params(
     )
 
 
-def cleanup(df: pl.DataFrame, delimiter: str) -> pl.DataFrame:
-    """
-    A representative demo of simple dataframe cleanup operation
-    utilizing the helper functions.
-
-    Parameters
-    ----------
-    df : pl.DataFrame
-        DataFrame to clean up.
-    delimiter : str
-        Name of the column to keep, even if it is empty.
-
-    Returns
-    -------
-    pl.DataFrame
-        Cleaned DataFrame.
-
-    Examples
-    --------
-    >>> (
-    ...     df := pl.DataFrame(
-    ...         {
-    ...             "x": [1, None, 3],
-    ...             "e": [None, None, None],
-    ...             "d": [None, None, None],
-    ...             "y": [4.0, None, 6.0],
-    ...         }
-    ...     )
-    ... )
-    shape: (3, 4)
-    ┌──────┬──────┬──────┬──────┐
-    │ x    ┆ e    ┆ d    ┆ y    │
-    │ ---  ┆ ---  ┆ ---  ┆ ---  │
-    │ i64  ┆ null ┆ null ┆ f64  │
-    ╞══════╪══════╪══════╪══════╡
-    │ 1    ┆ null ┆ null ┆ 4.0  │
-    │ null ┆ null ┆ null ┆ null │
-    │ 3    ┆ null ┆ null ┆ 6.0  │
-    └──────┴──────┴──────┴──────┘
-    >>> cleanup(df, delimiter="d")
-    shape: (2, 3)
-    ┌─────┬─────┬─────┐
-    │ x   ┆ d   ┆ y   │
-    │ --- ┆ --- ┆ --- │
-    │ i64 ┆ str ┆ f64 │
-    ╞═════╪═════╪═════╡
-    │ 1   ┆ |   ┆ 4.0 │
-    │ 3   ┆ |   ┆ 6.0 │
-    └─────┴─────┴─────┘
-    """
-    return (
-        # firstly we remove empty rows.
-        df.pipe(filter_all_null)
-        # then fill the delimiter column with junk to keep it.
-        .with_columns(pl.lit("|").alias(delimiter))
-        # finally drop any empty columns.
-        .pipe(drop_all_null)
-    )
-
-
 def metrics_to_rows(df: pl.DataFrame, separator="__") -> pl.DataFrame:
     """
-    Reshape a DataFrame by unpivoting and pivoting based on a column
-    name separator being present.
+    Reshape wide-format dataframe to a concise summary.
 
     Parameters
     ----------

@@ -1,11 +1,13 @@
 """
 A collection of polars expressions/idioms.
 
-These expressions have an unstable API and will change over time. Use
-them as a template and vendor within your own codebase for stability.
-These probably belong in a docs page, but they have earned their place
-here due to their widespread use across multiple domains. most of them
-are scavenged from Stackoverflow, Discord and github issues.
+These helpers could probably be snippets in a docs page. But they have
+earned their place here due to their utility across different domains.
+Most of these are slight modifications of snippets scavenged across the
+internet (primarily Stackoverflow, Discord and Github) and I have
+attempted to credit the original sources wherever possible. You can use
+them as a template or building blocks for complex data processing
+pipelines.
 """
 
 import re
