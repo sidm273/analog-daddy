@@ -28,7 +28,7 @@ qa-path path:
     uv run --python={{ python_version }} ruff check --fix {{ path }}
     uv run --python={{ python_version }} ruff format {{ path }}
     uv run --python={{ python_version }} format-docstring {{ path }}
-    uv run --python={{ python_version }} --isolated --only-group lint pydoclint {{ path }}
+    uv run --python={{ python_version }} --isolated --only-group lint_isolated pydoclint {{ path }}
     uv run --python={{ python_version }} ty check {{ path }}
     uv run --python={{ python_version }} pytest {{ path }}
 

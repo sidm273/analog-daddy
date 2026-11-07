@@ -57,26 +57,35 @@ dependencies = [
     { name = "xarray" },
 ]
 
+[package.optional-dependencies]
+notebooks = [
+    { name = "marimo", extra = ["lsp", "mcp", "recommended"] },
+    { name = "wigglystuff" },
+]
+
 [package.dev-dependencies]
 all = [
+    { name = "analog-daddy", extra = ["notebooks"] },
     { name = "format-docstring" },
     { name = "hypothesis" },
-    { name = "marimo", extra = ["lsp", "mcp", "recommended"] },
     { name = "mkdocstrings-python" },
     { name = "nbconvert" },
     { name = "playwright" },
     { name = "pytest" },
     { name = "ruff" },
     { name = "ty" },
-    { name = "wigglystuff" },
     { name = "zensical" },
 ]
 dev = [
     { name = "format-docstring" },
     { name = "hypothesis" },
+    { name = "mkdocstrings-python" },
+    { name = "nbconvert" },
+    { name = "playwright" },
     { name = "pytest" },
     { name = "ruff" },
     { name = "ty" },
+    { name = "zensical" },
 ]
 docs = [
     { name = "mkdocstrings-python" },
@@ -85,11 +94,16 @@ docs = [
     { name = "zensical" },
 ]
 lint = [
+    { name = "format-docstring" },
+    { name = "ruff" },
+    { name = "ty" },
+]
+lint-isolated = [
     { name = "pydoclint" },
 ]
-notebooks = [
-    { name = "marimo", extra = ["lsp", "mcp", "recommended"] },
-    { name = "wigglystuff" },
+testing = [
+    { name = "hypothesis" },
+    { name = "pytest" },
 ]
 
 [package.metadata]
@@ -97,6 +111,7 @@ requires-dist = [
     { name = "boltons" },
     { name = "cyclopts", marker = "sys_platform != 'emscripten'" },
     { name = "great-tables" },
+    { name = "marimo", extras = ["lsp", "mcp", "recommended"], marker = "extra == 'notebooks'" },
     { name = "plotly" },
     { name = "polars" },
     { name = "pydantic", specifier = ">=2" },
@@ -104,29 +119,34 @@ requires-dist = [
     { name = "quantiphy" },
     { name = "rich" },
     { name = "scipy" },
+    { name = "wigglystuff", marker = "extra == 'notebooks'" },
     { name = "xarray" },
 ]
+provides-extras = ["notebooks"]
 
 [package.metadata.requires-dev]
 all = [
+    { name = "analog-daddy", extras = ["notebooks"] },
     { name = "format-docstring" },
     { name = "hypothesis" },
-    { name = "marimo", extras = ["lsp", "mcp", "recommended"] },
     { name = "mkdocstrings-python" },
     { name = "nbconvert" },
     { name = "playwright" },
-    { name = "pytest" },
+    { name = "pytest", specifier = ">=9" },
     { name = "ruff" },
     { name = "ty" },
-    { name = "wigglystuff" },
     { name = "zensical" },
 ]
 dev = [
     { name = "format-docstring" },
     { name = "hypothesis" },
-    { name = "pytest" },
+    { name = "mkdocstrings-python" },
+    { name = "nbconvert" },
+    { name = "playwright" },
+    { name = "pytest", specifier = ">=9" },
     { name = "ruff" },
     { name = "ty" },
+    { name = "zensical" },
 ]
 docs = [
     { name = "mkdocstrings-python" },
@@ -134,10 +154,15 @@ docs = [
     { name = "playwright" },
     { name = "zensical" },
 ]
-lint = [{ name = "pydoclint" }]
-notebooks = [
-    { name = "marimo", extras = ["lsp", "mcp", "recommended"] },
-    { name = "wigglystuff" },
+lint = [
+    { name = "format-docstring" },
+    { name = "ruff" },
+    { name = "ty" },
+]
+lint-isolated = [{ name = "pydoclint" }]
+testing = [
+    { name = "hypothesis" },
+    { name = "pytest", specifier = ">=9" },
 ]
 
 [[package]]
