@@ -1,8 +1,11 @@
 [project]
 site_name = "Analog Daddy"
+site_description = "An attempt to make transistor sizing for Analog Design less painful."
+site_author = "Sid"
 site_url = "https://siddhantladdha.github.io/analog_daddy/"
 repo_url = "https://github.com/siddhantladdha/analog_daddy"
 repo_name = "siddhantladdha/analog_daddy"
+docs_dir = "docs"
 
 nav = [
   { "Home" = "index.md" },
@@ -12,7 +15,16 @@ nav = [
 ]
 
 [project.theme]
-features = ["content.code.copy"]
+language = "en"
+features = [
+  "content.code.copy",
+  "navigation.top",
+  "navigation.path",
+  "navigation.instant",
+  "navigation.instant.progress",
+  "navigation.footer",
+  "search.highlight",
+]
 
 [[project.theme.palette]]
 media = "(prefers-color-scheme: dark)"
@@ -25,6 +37,10 @@ media = "(prefers-color-scheme: light)"
 scheme = "default"
 toggle.icon = "material/brightness-7"
 toggle.name = "Switch to dark mode"
+
+[[project.extra.social]]
+icon = "fontawesome/brands/github"
+link = "https://github.com/siddhantladdha/analog-daddy"
 
 [project.plugins.api-autonav]
 modules = ["src/analog_daddy"]
