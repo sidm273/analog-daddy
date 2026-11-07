@@ -9,7 +9,7 @@ You can contribute in many ways:
 
 ### Report Bugs
 
-Report bugs at <https://github.com/siddhantladdha/analog_daddy/issues>.
+Report bugs at <https://github.com/sidm273/analog_daddy/issues>.
 
 If you are reporting a bug, please include:
 
@@ -46,7 +46,7 @@ auto-generated).
 ### Submit Feedback
 
 The best way to send feedback is to file an issue at
-<https://github.com/siddhantladdha/analog_daddy/issues>.
+<https://github.com/sidm273/analog_daddy/issues>.
 
 If you are proposing a feature:
 

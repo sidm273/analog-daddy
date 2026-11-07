@@ -3,7 +3,7 @@
 ## Reporting a Vulnerability
 
 If you find a security vulnerability in Analog Daddy, please report it through
-[GitHub's private vulnerability reporting](https://github.com/siddhantladdha/analog_daddy/security/advisories/new).
+[GitHub's private vulnerability reporting](https://github.com/sidm273/analog_daddy/security/advisories/new).
 This keeps the details private while we work on a fix.
 
 Please include:
