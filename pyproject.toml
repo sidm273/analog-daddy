@@ -7,10 +7,10 @@ requires-python = ">= 3.12"
 license = "MIT"
 license-files = ["LICENSE"]
 authors = [
-  { name = "Siddhant Laddha", email = "25705822+siddhantladdha@users.noreply.github.com" }
+  { name = "Sid L", email = "25705822+sidm273@users.noreply.github.com" }
 ]
 maintainers = [
-  { name = "Siddhant Laddha", email = "25705822+siddhantladdha@users.noreply.github.com" }
+  { name = "Sid L", email = "25705822+sidm273@users.noreply.github.com" }
 ]
 classifiers = [
   "Development Status :: 4 - Beta",
@@ -40,10 +40,10 @@ dependencies = [
 ]
 
 [project.urls]
-bugs = "https://github.com/siddhantladdha/analog_daddy/issues"
-changelog = "https://github.com/siddhantladdha/analog_daddy/releases"
-documentation = "https://siddhantladdha.github.io/analog_daddy/"
-homepage = "https://github.com/siddhantladdha/analog_daddy"
+bugs = "https://github.com/sidm273/analog_daddy/issues"
+changelog = "https://github.com/sidm273/analog_daddy/releases"
+documentation = "https://sidm273.github.io/analog_daddy/"
+homepage = "https://github.com/sidm273/analog_daddy"
 
 [project.scripts]
 analog_daddy = "analog_daddy.cli:app"
