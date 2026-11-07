@@ -58,6 +58,18 @@ from quantiphy import Quantity as _Quantity
 
 UnitConversion(["ohm", "Ohms", "ohms", "Ω"], "Ohm")
 
+__all__ = [
+    "Capacitance",
+    "Current",
+    "Frequency",
+    "Inductance",
+    "Power",
+    "Resistance",
+    "Temperature",
+    "Time",
+    "Voltage",
+]
+
 
 class Quantity(_Quantity):
     """
@@ -156,9 +168,10 @@ class Quantity(_Quantity):
                 case "as_tuple":
                     return as_tuple(self)
                 case _:
-                    raise ValueError(
+                    err_msg = (
                         f"Unknown quantity_format value: {quantity_format}"
                     )
+                    raise ValueError(err_msg)
         else:
             return as_real(self)
 

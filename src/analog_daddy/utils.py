@@ -6,6 +6,11 @@ from pathlib import Path
 
 from quantiphy import render as _render
 
+__all__ = [
+    "render",
+    "scan_contents",
+]
+
 
 def scan_contents(
     contents: bytes | str | Path,
@@ -66,7 +71,8 @@ def scan_contents(
         with contents.open() as lines:
             yield from search(lines)
     else:
-        raise TypeError(f"Unsupported type: {type(contents)}")
+        err_msg = f"Unsupported type: {type(contents)}"
+        raise TypeError(err_msg)
         # TODO: Runtime check needed?
 
 
@@ -103,5 +109,4 @@ def render(value: float | None, units: str = "") -> str:
     """  # noqa: DOC105
     if value is None:
         return ""
-    else:
-        return _render(value, units=units)
+    return _render(value, units=units)

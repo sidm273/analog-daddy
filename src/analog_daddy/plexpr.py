@@ -29,6 +29,16 @@ _COL_RE = re.compile(
     re.VERBOSE,
 )
 
+__all__ = [
+    "all_minmax_by",
+    "item_where",
+    "ksigma_bounds",
+    "list_cast",
+    "list_render_unique",
+    "minmax",
+    "spec",
+]
+
 
 def minmax(
     expr: pl.Expr,
@@ -422,8 +432,9 @@ def spec(
     operator, *vals = spec.split()
     try:
         vals = [_parse_operand(v) for v in vals]
-    except InvalidNumber:
-        raise ValueError(f"bad numbers {vals} in spec: {spec}")
+    except InvalidNumber as err:
+        err_msg = f"bad numbers {vals} in spec: {spec}"
+        raise ValueError(err_msg) from err
 
     match operator:
         case ">":
@@ -437,7 +448,8 @@ def spec(
             val, tol_pct = vals
             tol_abs = abs(val) * tol_pct / 100
             return col.is_between(val - tol_abs, val + tol_abs)
-    raise ValueError(f"bad spec: {spec}")
+    err_msg = f"Improperly formatted spec: {spec}"
+    raise ValueError(err_msg)
 
 
 def list_cast() -> tuple[pl.Expr, pl.Expr]:
@@ -535,9 +547,8 @@ def list_render_unique(max_len: int = 3) -> pl.Expr:
     ulist = cs.list(cs.string()).list.unique().list
     n = ulist.len()
     head_n = ulist.head(max_len).list
-    cond = (
+    return (
         pl.when(n > max_len)
         .then(pl.format("{} + {} more", head_n.join(", "), n - max_len))
         .otherwise(ulist.join(", "))
     )
-    return cond

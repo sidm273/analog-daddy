@@ -18,6 +18,12 @@ from wigglystuff import CopyToClipboard
 
 from analog_daddy.utils import render
 
+__all__ = [
+    "df_repr_docstr_clip",
+    "mo_table",
+    "rich_md",
+]
+
 
 def format_mapping_num_to_si(df: pl.DataFrame) -> dict[str, Callable]:
     """

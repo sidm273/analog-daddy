@@ -5,6 +5,14 @@ import re
 import polars as pl
 import polars.selectors as cs
 
+__all__ = [
+    "drop_all_null",
+    "explode_nested_params",
+    "filter_all_null",
+    "metrics_to_rows",
+    "scan_nested_params",
+]
+
 
 def drop_all_null(df: pl.DataFrame) -> pl.DataFrame:
     """
@@ -178,7 +186,8 @@ def scan_nested_params(
     ).item()
 
     if not first:
-        raise ValueError(f"No row found starting with {identify_str}")
+        err_msg = f"No row found starting with {identify_str}"
+        raise ValueError(err_msg)
     first = first.replace(" ", "").removeprefix(identify_str)
     return [
         pair.split(re.escape(key_split))[0]

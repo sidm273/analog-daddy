@@ -35,6 +35,8 @@ import polars as pl
 import polars.selectors as cs
 from boltons.iterutils import split
 
+__all__ = ["map_roles"]
+
 
 class _CSRoles:
     """semantic roles of columns in a DataFrame as polars selectors."""
