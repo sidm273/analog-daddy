@@ -19,6 +19,10 @@ Time('1 ns')
 '{"resistance":"4.7 kOhm","time":"1 ns"}'
 >>> rc.model_dump_json(context={"quantity_format": "as_tuple"})
 '{"resistance":[4700.0,"Ohm"],"time":[1e-9,"s"]}'
+>>> class SlewRate(Quantity):
+...     units: str = "V/s"
+>>> SlewRate("1.5 MV/s").as_tuple()
+(1500000.0, 'V/s')
 
 Notes
 -----
@@ -348,3 +352,39 @@ class Frequency(Quantity):
     """
 
     units: str = "Hz"
+
+
+class Length(Quantity):
+    """
+    Length quantity with units of meters.
+
+    Attributes
+    ----------
+    units : str, default="m"
+        Unit symbol.
+
+    Examples
+    --------
+    >>> Length(5e-9)
+    Length('5 nm')
+    """
+
+    units: str = "m"
+
+
+class Width(Quantity):
+    """
+    Width quantity with units of meters.
+
+    Attributes
+    ----------
+    units : str, default="m"
+        Unit symbol.
+
+    Examples
+    --------
+    >>> Width(5e-9)
+    Width('5 nm')
+    """
+
+    units: str = "m"

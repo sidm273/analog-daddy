@@ -175,7 +175,12 @@ extend-select = [
 # There are certain `preview`/beta rules that I am selectively enabling.
 preview = true
 explicit-preview-rules = true
-external = ["DOC105"]
+# allows noqa for external rules.
+external = [
+  "DOC105",
+  "DOC601",
+  "DOC603",
+]
 
 [tool.ruff.lint.pydocstyle]
 convention = "numpy"
