@@ -17,7 +17,7 @@ marimo notebook="src/analog_daddy/drafts.py":
 
 qa:
     # Run pre-commit hooks using prek.
-    prek run
+    uv run prek run
 
 # Run all the tests for all the supported Python versions
 testall:

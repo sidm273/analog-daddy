@@ -56,7 +56,7 @@ hooks = [
   {
     id = "complexipy",
     name = "Run the complexipy lint check",
-    entry = "uv run complexipy",
+    entry = "uv run complexipy --max-complexity-allowed 5",
     language = "system",
     types = ["python"],
   },
