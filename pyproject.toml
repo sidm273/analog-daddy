@@ -75,8 +75,9 @@ docs = [
 lint = [
   "complexipy>=8",
   "format-docstring",
-  "ruff",
-  "ty",
+  "prek>=0.5.10",
+  "ruff==0.17.4",
+  "ty==0.0.99",
 ]
 # pydoclint has issues with cyclopts.
 lint_isolated = ["pydoclint"]
