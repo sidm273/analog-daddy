@@ -73,6 +73,7 @@ docs = [
   # TODO: evaluate vs great-docs for marimo notebooks in docs.
 ]
 lint = [
+  "complexipy>=8",
   "format-docstring",
   "ruff",
   "ty",
