@@ -17,23 +17,23 @@ pip install analog-daddy
 ## From source
 
 The source files for Analog Daddy can be downloaded from the
-[Github repo](https://github.com/sidm273/analog_daddy).
+[Github repo](https://github.com/sidm273/analog-daddy).
 
 You can either clone the public repository:
 
 ```sh
-git clone https://github.com/sidm273/analog_daddy
+git clone https://github.com/sidm273/analog-daddy
 ```
 
-Or download the [tarball](https://github.com/sidm273/analog_daddy/tarball/main):
+Or download the [tarball](https://github.com/sidm273/analog-daddy/tarball/main):
 
 ```sh
-curl -OJL https://github.com/sidm273/analog_daddy/tarball/main
+curl -OJL https://github.com/sidm273/analog-daddy/tarball/main
 ```
 
 Once you have a copy of the source, you can install it with:
 
 ```sh
-cd analog_daddy
+cd analog-daddy
 uv sync
 ```

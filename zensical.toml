@@ -2,9 +2,9 @@
 site_name = "Analog Daddy"
 site_description = "An attempt to make transistor sizing for Analog Design less painful."
 site_author = "Sid"
-site_url = "https://sidm273.github.io/analog_daddy/"
-repo_url = "https://github.com/sidm273/analog_daddy"
-repo_name = "sidm273/analog_daddy"
+site_url = "https://sidm273.github.io/analog-daddy/"
+repo_url = "https://github.com/sidm273/analog-daddy"
+repo_name = "sidm273/analog-daddy"
 docs_dir = "docs"
 
 nav = [
