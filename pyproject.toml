@@ -132,6 +132,8 @@ ignore = [
   # "D103",  # undocumented-public-method
   "D105",  # undocumented-magic-method
   "D401",  # non-imperative-mood
+  "PLW0131",  # marimo: walrus
+  "B018",  # marimo: useless expressions
 ]
 extend-select = [
   "ARG",  # flake8-unused-arguments
