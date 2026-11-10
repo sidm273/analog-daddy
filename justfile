@@ -13,7 +13,9 @@ alias m := marimo
 
 # Launch marimo notebook
 marimo notebook="src/analog_daddy/drafts.py":
-    uv run marimo edit --headless --no-token --skip-update-check --no-sandbox {{ notebook }}
+    uv run marimo --log-level info edit \
+        --headless --no-token --skip-update-check \
+        --no-sandbox {{ notebook }}
 
 qa:
     # Run pre-commit hooks using prek.
