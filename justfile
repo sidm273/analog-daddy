@@ -11,8 +11,8 @@ alias d := docs-serve
 alias t := test
 alias m := marimo
 
-# Launch marimo notebook
 marimo notebook="src/analog_daddy/drafts.py":
+    # Launch marimo notebook
     uv run marimo --log-level info edit \
         --headless --no-token --skip-update-check \
         --no-sandbox {{ notebook }}
@@ -21,38 +21,38 @@ qa:
     # Run pre-commit hooks using prek.
     uv run prek run
 
-# Run all the tests for all the supported Python versions
 testall:
+    # Run all the tests for all the supported Python versions
     uv run --python=3.12 pytest
     uv run --python=3.13 pytest
     uv run --python={{ python_version }} pytest
 
-# Run all the tests, but allow for arguments to be passed
 test *ARGS:
+    # Run all the tests, but allow for arguments to be passed
     @echo "Running with arg: {{ ARGS }}"
     uv run --python={{ python_version }} pytest {{ ARGS }}
 
-# Serve docs locally with live reload
 docs-serve:
+    # Serve docs locally with live reload
     -lsof -ti :8000 | xargs kill
     uv run --group docs zensical serve
 
-# Build docs (strict mode, fails on warnings)
 docs-build:
+    # Build docs (strict mode, fails on warnings)
     uv run --group docs zensical build --clean
 
-# Build the project, useful for checking that packaging is correct
 build:
+    # Build the project, useful for checking that packaging is correct
     rm -rf build
     rm -rf dist
     uv build
 
-# Tag, push, and create a GitHub release
 release:
+    # Tag, push, and create a GitHub release
     uv run scripts/release.py
 
-# Remove all build, test and Python artifacts
 clean:
+    # Remove all build, test and Python artifacts
     rm -fr build/
     rm -fr dist/
     rm -fr .eggs/
@@ -66,8 +66,8 @@ clean:
     find . -name '.ruff_cache' -exec rm -fr {} +
     rm -fr .pytest_cache
 
-# Publish to PyPI (manual alternative to GitHub Actions)
 publish:
+    # Publish to PyPI (manual alternative to GitHub Actions)
     uv build
     uv publish
 
