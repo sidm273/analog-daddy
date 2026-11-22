@@ -2,8 +2,14 @@
 
 ## Update
 
-Hi. Quick update for anyone looking into using this library.
-Yes this tool is actively maintained. I am working on v3 of this library which will utilize and consider the feedback I have received. I intend to write a post detailing my learnings, experience and feedback received on this project once I find time.
+Hi! Quick update for anyone looking into using this library.
+1. Yes this tool is actively maintained!
+2. I am working on v3 of this library which will utilize and consider the feedback I have received. Best way to give a feedback is [here](https://github.com/sidm273/analog-daddy/issues/new/choose). Or you can reach out to me via other modes of communication.
+3. There is no specific timeline for a stable release since I am only able to work on this over weekends. And I am still figuring out the balancing act of resting and working on side projects!
+4. v2 will not be receiving any support after v3 is available as a stable release.
+5. I intend to eventually write a post detailing my learnings/experience.
+6. You can follow along the progress in the [dev branch](https://github.com/sidm273/analog-daddy/tree/dev) and [related blog post](https://sid555.com/blog/analog-daddy/).
+
 
 ## Motivation
 
