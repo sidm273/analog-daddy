@@ -422,3 +422,67 @@ def metrics_to_rows(df: pl.DataFrame, separator="__") -> pl.DataFrame:
             # index: everything else; must be unique per on
         )
     )
+
+
+def df_shape_diff(
+    df_before: pl.DataFrame,
+    df_after: pl.DataFrame,
+) -> pl.DataFrame:
+    """
+    Compare the number of rows and columns in two DataFrames.
+
+    Parameters
+    ----------
+    df_before : pl.DataFrame
+        The DataFrame before changes.
+    df_after : pl.DataFrame
+        The DataFrame after changes.
+
+    Returns
+    -------
+    pl.DataFrame
+        A DataFrame with the row and column counts for each input, plus
+        their signed differences.
+
+    Examples
+    --------
+    >>> df1 = pl.from_repr(r'''shape: (2, 2)
+    ... ┌─────┬─────┐
+    ... │ A   ┆ B   │
+    ... │ --- ┆ --- │
+    ... │ i64 ┆ i64 │
+    ... ╞═════╪═════╡
+    ... │ 1   ┆ 3   │
+    ... │ 2   ┆ 4   │
+    ... └─────┴─────┘
+    ... ''')
+    >>> df2 = pl.from_repr(r'''shape: (1, 3)
+    ... ┌─────┬─────┬─────┐
+    ... │ A   ┆ B   ┆ C   │
+    ... │ --- ┆ --- ┆ --- │
+    ... │ i64 ┆ i64 ┆ i64 │
+    ... ╞═════╪═════╪═════╡
+    ... │ 1   ┆ 3   ┆ 5   │
+    ... └─────┴─────┴─────┘
+    ... ''')
+    >>> df_shape_diff(df1, df2)
+    shape: (2, 4)
+    ┌─────────┬────────┬───────┬────────────────┐
+    │ No. of  ┆ before ┆ after ┆ after - before │
+    │ ---     ┆ ---    ┆ ---   ┆ ---            │
+    │ str     ┆ i64    ┆ i64   ┆ i64            │
+    ╞═════════╪════════╪═══════╪════════════════╡
+    │ Rows    ┆ 2      ┆ 1     ┆ -1             │
+    │ Columns ┆ 2      ┆ 3     ┆ 1              │
+    └─────────┴────────┴───────┴────────────────┘
+    """
+    delta_df = pl.DataFrame(
+        {
+            "No. of": ["Rows", "Columns"],
+            "before": df_before.shape,
+            "after": df_after.shape,
+        }
+    )
+    return delta_df.with_columns(
+        (pl.col("after") - pl.col("before")).alias("after - before"),
+    )
