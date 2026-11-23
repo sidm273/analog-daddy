@@ -1,7 +1,7 @@
 import marimo
 
 __generated_with = "0.25.2"
-app = marimo.App(width="medium")
+app = marimo.App(width="full", app_title="CSV to LUT Import")
 
 with app.setup(hide_code=True):
     from urllib.request import urlopen
@@ -34,8 +34,8 @@ def _(indep_vars, raw_df):
     Independent Variables found: {indep_vars}
 
     {mo.as_html(raw_df)}
-
     """)
+    return
 
 
 @app.cell
@@ -73,6 +73,7 @@ def _(df, indep_vars):
 def _(tree: DataTree):
     nmos_svt: Dataset = tree.nmos_svt.dataset
     nmos_svt
+    return
 
 
 if __name__ == "__main__":

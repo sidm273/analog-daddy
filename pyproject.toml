@@ -6,12 +6,8 @@ readme = "README.md"
 requires-python = ">= 3.12"
 license = "MIT"
 license-files = ["LICENSE"]
-authors = [
-  { name = "Sid L", email = "25705822+sidm273@users.noreply.github.com" }
-]
-maintainers = [
-  { name = "Sid L", email = "25705822+sidm273@users.noreply.github.com" }
-]
+authors = [{ name = "Sid L", email = "25705822+sidm273@users.noreply.github.com" }]
+maintainers = [{ name = "Sid L", email = "25705822+sidm273@users.noreply.github.com" }]
 classifiers = [
   "Development Status :: 4 - Beta",
   "Intended Audience :: Education",
@@ -120,7 +116,7 @@ testpaths = ["src", "tests"]
 
 [tool.ruff]
 line-length = 79
-extend-exclude = ["*drafts*.py"]
+extend-exclude = ["*drafts*.py", "src/analog_daddy/clanker/notebook"]
 output-prefer-rule-codes = true
 show-fixes = true
 
