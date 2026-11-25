@@ -59,5 +59,14 @@ hooks = [
     entry = "uv run complexipy --max-complexity-allowed 5",
     language = "system",
     types = ["python"],
+    exclude = "^scripts/",
+  },
+  {
+    id = "complexipy-scripts",
+    name = "Check repo helper scripts complexity (relaxed)",
+    entry = "uv run complexipy --max-complexity-allowed 15",
+    language = "system",
+    types = ["python"],
+    files = "^scripts/",
   },
 ]

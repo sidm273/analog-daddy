@@ -51,20 +51,9 @@ release:
     # Tag, push, and create a GitHub release
     uv run scripts/release.py
 
-clean:
+clean *ARGS:
     # Remove all build, test and Python artifacts
-    rm -fr build/
-    rm -fr dist/
-    rm -fr .eggs/
-    find . -name '*.egg-info' -exec rm -fr {} +
-    find . -name '*.egg' -exec rm -f {} +
-    find . -name '*.pyc' -exec rm -f {} +
-    find . -name '*.pyo' -exec rm -f {} +
-    find . -name '*~' -exec rm -f {} +
-    find . -name '__pycache__' -exec rm -fr {} +
-    find . -name '.rumdl_cache' -exec rm -fr {} +
-    find . -name '.ruff_cache' -exec rm -fr {} +
-    rm -fr .pytest_cache
+    ./scripts/clean_cache.py {{ ARGS }}
 
 publish:
     # Publish to PyPI (manual alternative to GitHub Actions)
