@@ -22,7 +22,12 @@ from pydantic import (
     validate_call,
 )
 from pydantic.alias_generators import to_camel
-from pydantic_settings import BaseSettings
+from pydantic_settings import (
+    BaseSettings,
+    CliApp,
+    CliPositionalArg,
+    SettingsConfigDict,
+)
 
 from analog_daddy.units import Time
 
@@ -34,8 +39,8 @@ class KitchenSink(BaseModel):
     A reference model containing most used patterns.
 
     Key features include, customized serialization aliases, using custom
-    types and its serialization preferences. Field descriptions serve as
-    usage examples. Keep new field descriptions equally explicit.
+    types and its serialization preferences. Field docstrings serve as
+    usage examples. Keep new field docstrings equally explicit.
 
     Examples
     --------
@@ -97,34 +102,81 @@ class KitchenSink(BaseModel):
     """  # noqa: DOC601, DOC603
 
     model_config = ConfigDict(
+        use_attribute_docstrings=True,
         alias_generator=AliasGenerator(
             serialization_alias=to_camel,
         ),
     )
     base_command: str
     sub_command: tuple[str, ...] = ("release", "download")
-    middle_name: str = Field(
-        default="Reginald",
-        description="Middle name of the person.",
-    )
+    middle_name: str = "Reginald"
+    """Middle name of the person."""
     created_at: float = Field(default_factory=time.time)
     directory: DirectoryPath
     archive: Literal["zip", "tar.gz"] = "zip"
-    acceptable_ext: list[Extensions] = Field(
-        default=["zip"],
-        description="A list of acceptable extensions.",
-    )
+    acceptable_ext: list[Extensions] = Field(default=["zip"])
+    """A list of acceptable extensions."""
     start_time: Time = Time("1n")
     log_path: FilePath | None = None
     n: PositiveInt = Field(default=2)
-    age: int = Field(ge=0, le=150, description="User age", default=30)
-    custom_logpath: NewPath | Literal["%J.out"] = Field(
-        default="%J.out",
-        description="A custom new path field.",
-    )
+    age: int = Field(ge=0, le=150, default=30)
+    """User age."""
+    custom_logpath: NewPath | Literal["%J.out"] = "%J.out"
+    """A custom new path field."""
     listicle: list[tuple[str, int | str]] = Field(
         default=[("item1", 1), ("item2", "2n")]
     )
+
+
+class Ripgrep(BaseSettings):
+    """
+    Build shell commands using pydantic-settings CLI serialization.
+
+    The pattern provides an advantage over the traditional ``extend`` by
+    outsourcing to pydantic's validation and serialization.
+
+    Examples
+    --------
+    >>> Ripgrep(pattern="cunt").to_argv()
+    ['rg', '--regexp', 'cunt']
+    >>> Ripgrep(
+    ...     pattern="what's up bitches", path="src", fixed_strings=True
+    ... ).to_argv()
+    ['rg', '--regexp', "what's up bitches", '--fixed-strings', 'src']
+    >>> Ripgrep(pattern="error", glob=["*.py", "!test_*"]).to_argv()
+    ['rg', '--regexp', 'error', '--glob', '*.py', '--glob', '!test_*']
+
+    Notes
+    -----
+    This pattern might not be a correct fit, but let's see if it
+    survives.
+    """  # noqa: DOC601, DOC603, DOC605
+
+    model_config = SettingsConfigDict(
+        use_attribute_docstrings=True,
+        cli_implicit_flags=True,
+        cli_kebab_case=True,
+        env_prefix="RG_",
+        populate_by_name=True,
+        env_prefix_target="all",
+    )
+    """Flag serialization and environment settings."""
+    pattern: str = Field(alias="regexp")
+    """str: Pattern to search for, for example 'error'."""
+    path: CliPositionalArg[str | None] = None
+    """CliPositionalArg[str | None]: Optional file or directory to search."""
+    fixed_strings: bool = False
+    """bool: Treat the pattern as a literal string."""
+    glob: list[str] | None = None
+    """list[str] | None: File globs, for example ['*.py', '!test_*']."""
+    files_with_matches: bool = False
+    """bool: Print only the names of files containing matches."""
+    invert_match: bool = False
+    """bool: Print lines that do not match the pattern."""
+
+    def to_argv(self) -> list[str]:
+        """Return arguments for subprocess execution without a shell."""
+        return ["rg", *CliApp.serialize(self, list_style="argparse")]
 
 
 class Env(BaseSettings):

@@ -96,6 +96,7 @@ exclude = "\\.git|\\.venv|__pycache__|.*drafts.*\\.py"
 style = "numpy"
 arg-type-hints-in-docstring = true
 arg-type-hints-in-signature = true
+require-inline-class-var-docs = true
 check-return-types = true
 check-arg-defaults = true
 check-style-mismatch = true
@@ -180,6 +181,7 @@ external = [
   "DOC105",
   "DOC601",
   "DOC603",
+  "DOC605",
 ]
 
 [tool.ruff.lint.pydocstyle]
