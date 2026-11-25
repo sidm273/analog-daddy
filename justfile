@@ -69,5 +69,8 @@ version-bump bump="dev":
     git add pyproject.toml uv.lock
     git commit --message "Release $tag"
     git tag --annotate "$tag" --message "Release $tag"
-    git push origin HEAD
-    git push origin "$tag"
+    just _push
+
+[confirm("Push the release?")]
+_push:
+    git push --atomic origin HEAD "$tag"
