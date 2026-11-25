@@ -42,7 +42,7 @@ documentation = "https://sidm273.github.io/analog_daddy/"
 homepage = "https://github.com/sidm273/analog_daddy"
 
 [project.scripts]
-analog_daddy = "analog_daddy.cli:app"
+analog_daddy = "analog_daddy.__main__:app"
 
 [project.optional-dependencies]
 notebooks = [
