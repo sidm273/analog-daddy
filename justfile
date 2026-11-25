@@ -60,7 +60,7 @@ publish:
     uv build
     uv publish
 
-# just version-bump [dev|patch|minor|major]
+# just version-bump [dev|alpha|beta|patch|minor|major]
 version-bump bump="dev":
     #!/usr/bin/env bash
     set -euo pipefail
@@ -73,4 +73,5 @@ version-bump bump="dev":
 
 [confirm("Push the release?")]
 _push:
-    git push --atomic origin HEAD "$tag"
+    # push with tags.
+    git push origin HEAD --tags --verbose
