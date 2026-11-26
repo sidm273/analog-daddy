@@ -16,7 +16,10 @@ metadata:
 
 1. Module, class, and function docstrings are the single source of truth and
    take priority over any other sources.
-2. Any python scripts in `references/` double as documentation. The docstrings
+2. The docstrings follow `numpy` format.
+3. Read the docstring progressively, stopping once you have enough information
+   for the task. Skip the `Notes` section unless explicitly requested.
+4. Any python scripts in `references/` double as documentation. The docstrings
    provide instructions about using the pattern and the code is the sample
    implementation. Keep installed files read-only; copy examples into user's
    workspace before editing or running.

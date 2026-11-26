@@ -5,6 +5,8 @@ Before creating new pydantic models, reuse the fields, validators,
 config patterns and types defined here. Only introduce new Pydantic
 features after exhausting what's available in this file and after
 consulting the user.
+
+When asked to model a CLI command, read the :class:`Ripgrep` docstrings.
 """
 
 import time
@@ -130,7 +132,34 @@ class KitchenSink(BaseModel):
 
 class Ripgrep(BaseSettings):
     """
-    Build shell commands using pydantic-settings CLI serialization.
+    Build command argument list using pydantic's serialization.
+
+    Model a CLI command as a minimal, typed Pydantic model that
+    serializes into ``list[str]`` for subprocess execution. Follow
+    applicable type, configuration, field documentation, and
+    serialization conventions documented in this reference class. Use
+    provided CLI usage information (usually provided as command or a
+    code which chains lists to create commands). If absent, consult
+    ``tldr``, then ``--help``, then ``man`` pages. Stop once sufficient
+    information is available. Model the requested subset of common
+    options, flags, positional arguments, and subcommands. Do not invent
+    missing requirements or cover every option. Use
+    ``pydantic_settings.CliApp.serialize``; do not hand-roll flag
+    serialization. Prefer ``BaseModel``; use ``BaseSettings`` only when
+    environment-variable loading is requested. Document fields with
+    attribute docstrings and enable ``use_attribute_docstrings=True``.
+    Avoid exhaustive validation, obscure options, and special edge-case
+    handling. Delegate semantic validation to the executable. Keep the
+    model minimal, readable, and deterministic. Do not introduce
+    unnecessary abstractions or execution frameworks. Include a small
+    doctest showing the exact resulting argv. Do not execute the modeled
+    command. ``CliApp.serialize`` omits values equal to declared
+    defaults, even when explicitly supplied. Choose defaults with the
+    executable's defaults in mind. There is no public include-defaults
+    option in the verified version. A ``default_factory`` emits its
+    value in that version, but this behavior is not a documented
+    guarantee. Do not silently use factories to force emission.
+
 
     The pattern provides an advantage over the traditional ``extend`` by
     outsourcing to pydantic's validation and serialization.
